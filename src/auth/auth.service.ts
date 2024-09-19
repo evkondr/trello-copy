@@ -12,4 +12,17 @@ export class AuthService {
   async login(dto:AuthDto) {
     return dto;
   }
+  private issueTokens(userId:string) {
+    const data = { id: userId };
+
+    const accessToken = this.jwt.sign(data, {
+      expiresIn: '1h',
+    })
+
+    const refreshToken = this.jwt.sign(data, {
+      expiresIn: '7d',
+    })
+
+    return { accessToken, refreshToken }
+  }
 }
